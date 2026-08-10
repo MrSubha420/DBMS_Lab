@@ -1,203 +1,415 @@
-# All the Basic DML Commands : 
+# MySQL Complete Tutorial: Database, Table & DML Operations Using a Student Table — Step by Step with Description, Syntax, Example & Output
 
-A quick reference guide to the core **Data Manipulation Language (DML)** commands in SQL — `INSERT`, `SELECT`, `UPDATE`, `DELETE`, and `MERGE`.
+## PART 1: BASIC SETUP
 
----
+### Step 1: Create Database
 
-## 1. INSERT Command
-
-**Purpose:** Used to add new records into a table.
+**Description:** Creates a new database named School if it doesn't already exist.
 
 **Syntax:**
 ```sql
-INSERT INTO table_name (column1, column2, ...)
-VALUES (value1, value2, ...);
-```
-or
-```sql
-INSERT INTO table_name
-VALUES (value1, value2, ...);
+CREATE DATABASE database_name;
 ```
 
 **Example:**
 ```sql
-INSERT INTO Student VALUES (3, 'Amit', 22);
+CREATE DATABASE School;
 ```
 
-**Result:**
+**Verify:**
+```sql
+SHOW DATABASES;
+```
 
-| StudentID | Name  | Age |
-|-----------|-------|-----|
-| 1         | Rahul | 20  |
-| 2         | Priya | 21  |
-| 3         | Amit  | 22  |
+**Output:**
+```
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| School              |
+| sys                |
++--------------------+
+```
 
----
+### Step 2: Select (Use) the Database
 
-## 2. SELECT Command
-
-**Purpose:** Used to retrieve (display) data from one or more tables.
+**Description:** Tells MySQL which database to work in for all following commands.
 
 **Syntax:**
 ```sql
--- Retrieve all columns
-SELECT * FROM table_name;
-
--- Retrieve specific columns
-SELECT column1, column2 FROM table_name;
+USE database_name;
 ```
 
-**Example 1:**
+**Example:**
+```sql
+USE School;
+```
+
+**Verify:**
+```sql
+SELECT DATABASE();
+```
+
+**Output:**
+```
++------------+
+| DATABASE() |
++------------+
+| School     |
++------------+
+```
+
+### Step 3: Create Table
+
+**Description:** Creates a Student table with 6 fields: stu_id, Name, Father_Name, Email, City, HS_Marks.
+
+**Syntax:**
+```sql
+CREATE TABLE table_name (
+    column1 datatype constraint,
+    column2 datatype constraint,
+    ...
+);
+```
+
+**Example:**
+```sql
+CREATE TABLE Student (
+    stu_id INT PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL,
+    Father_Name VARCHAR(50),
+    Email VARCHAR(100),
+    City VARCHAR(50),
+    HS_Marks DECIMAL(5,2)
+);
+```
+
+**Verify:**
+```sql
+DESCRIBE Student;
+```
+
+**Output:**
+```
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| stu_id      | int          | NO   | PRI | NULL    |       |
+| Name        | varchar(50)  | NO   |     | NULL    |       |
+| Father_Name | varchar(50)  | YES  |     | NULL    |       |
+| Email       | varchar(100) | YES  |     | NULL    |       |
+| City        | varchar(50)  | YES  |     | NULL    |       |
+| HS_Marks    | decimal(5,2) | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+```
+
+## PART 2: DML OPERATIONS
+
+### (a) INSERT — Insert 12 Students at a Time
+
+**Description:** Adds multiple rows into the table in a single statement (bulk insert).
+
+**Syntax:**
+```sql
+INSERT INTO table_name (col1, col2, ...)
+VALUES (val1, val2, ...), (val1, val2, ...);
+```
+
+**Example:**
+```sql
+INSERT INTO Student (stu_id, Name, Father_Name, Email, City, HS_Marks) VALUES
+(1, 'Aarav Sharma', 'Rakesh Sharma', 'aarav.sharma@email.com', 'Delhi', 85.50),
+(2, 'Priya Patel', 'Manoj Patel', 'priya.patel@email.com', 'Ahmedabad', 78.25),
+(3, 'Rohan Verma', 'Suresh Verma', 'rohan.verma@email.com', 'Lucknow', 92.00),
+(4, 'Sneha Reddy', 'Kiran Reddy', 'sneha.reddy@email.com', 'Hyderabad', 88.75),
+(5, 'Karan Singh', 'Devendra Singh', 'karan.singh@email.com', 'Jaipur', 65.40),
+(6, 'Ananya Iyer', 'Ramesh Iyer', 'ananya.iyer@email.com', 'Chennai', 91.20),
+(7, 'Vikram Nair', 'Sunil Nair', 'vikram.nair@email.com', 'Kochi', 73.60),
+(8, 'Divya Menon', 'Anil Menon', 'divya.menon@email.com', 'Kochi', 80.00),
+(9, 'Arjun Gupta', 'Ravi Gupta', 'arjun.gupta@email.com', 'Kanpur', 68.90),
+(10, 'Kavya Rao', 'Prakash Rao', 'kavya.rao@email.com', 'Bangalore', 95.30),
+(11, 'Aditya Joshi', 'Mahesh Joshi', 'aditya.joshi@email.com', 'Pune', 77.85),
+(12, 'Meera Desai', 'Nitin Desai', 'meera.desai@email.com', 'Surat', 83.15);
+```
+
+**Output:**
+```
+Query OK, 12 rows affected (0.02 sec)
+Records: 12  Duplicates: 0  Warnings: 0
+```
+
+### (b) SELECT — Verify All Data Was Inserted
+
+**Description:** Retrieves and displays all rows/columns from the table to confirm the insert worked.
+
+**Syntax:**
+```sql
+SELECT * FROM table_name;
+```
+
+**Example:**
 ```sql
 SELECT * FROM Student;
 ```
 
-**Result:**
-
-| StudentID | Name  | Age |
-|-----------|-------|-----|
-| 1         | Rahul | 20  |
-| 2         | Priya | 21  |
-| 3         | Amit  | 22  |
-
-**Example 2:**
-```sql
-SELECT Name, Age FROM Student;
+**Output:**
+```
++--------+---------------+-----------------+---------------------------+------------+----------+
+| stu_id | Name          | Father_Name     | Email                     | City       | HS_Marks |
++--------+---------------+-----------------+---------------------------+------------+----------+
+| 1      | Aarav Sharma  | Rakesh Sharma   | aarav.sharma@email.com    | Delhi      | 85.50    |
+| 2      | Priya Patel   | Manoj Patel     | priya.patel@email.com     | Ahmedabad  | 78.25    |
+| 3      | Rohan Verma   | Suresh Verma    | rohan.verma@email.com     | Lucknow    | 92.00    |
+| 4      | Sneha Reddy   | Kiran Reddy     | sneha.reddy@email.com     | Hyderabad  | 88.75    |
+| 5      | Karan Singh   | Devendra Singh  | karan.singh@email.com     | Jaipur     | 65.40    |
+| 6      | Ananya Iyer   | Ramesh Iyer     | ananya.iyer@email.com     | Chennai    | 91.20    |
+| 7      | Vikram Nair   | Sunil Nair      | vikram.nair@email.com     | Kochi      | 73.60    |
+| 8      | Divya Menon   | Anil Menon      | divya.menon@email.com     | Kochi      | 80.00    |
+| 9      | Arjun Gupta   | Ravi Gupta      | arjun.gupta@email.com     | Kanpur     | 68.90    |
+| 10     | Kavya Rao     | Prakash Rao     | kavya.rao@email.com       | Bangalore  | 95.30    |
+| 11     | Aditya Joshi  | Mahesh Joshi    | aditya.joshi@email.com    | Pune       | 77.85    |
+| 12     | Meera Desai   | Nitin Desai     | meera.desai@email.com     | Surat      | 83.15    |
++--------+---------------+-----------------+---------------------------+------------+----------+
+12 rows in set (0.00 sec)
 ```
 
-**Result:**
+**Check row count directly:**
+```sql
+SELECT COUNT(*) FROM Student;
+```
+```
++----------+
+| COUNT(*) |
++----------+
+| 12       |
++----------+
+```
 
-| Name  | Age |
-|-------|-----|
-| Rahul | 20  |
-| Priya | 21  |
-| Amit  | 22  |
+### (c) INSERT — Data on Specific Fields Only
 
----
-
-## 3. UPDATE Command
-
-**Purpose:** Used to modify existing records in a table.
+**Description:** Inserts a new row while providing values for only some columns (other columns become NULL). This is done by explicitly listing which columns you're filling.
 
 **Syntax:**
 ```sql
-UPDATE table_name
-SET column_name = value
-WHERE condition;
+INSERT INTO table_name (col1, col2) VALUES (val1, val2);
 ```
-
-> **Note:** If the `WHERE` clause is omitted, all rows in the table will be updated.
 
 **Example:**
 ```sql
-UPDATE Student SET Age = 23 WHERE StudentID = 3;
+INSERT INTO Student (stu_id, Name, City) VALUES (13, 'Rahul Mehta', 'Mumbai');
 ```
 
-**Result:**
+**Verify:**
+```sql
+SELECT * FROM Student WHERE stu_id = 13;
+```
 
-| StudentID | Name  | Age |
-|-----------|-------|-----|
-| 1         | Rahul | 20  |
-| 2         | Priya | 21  |
-| 3         | Amit  | 23  |
+**Output:**
+```
++--------+-------------+-------------+-------+--------+----------+
+| stu_id | Name        | Father_Name | Email | City   | HS_Marks |
++--------+-------------+-------------+-------+--------+----------+
+| 13     | Rahul Mehta | NULL        | NULL  | Mumbai | NULL     |
++--------+-------------+-------------+-------+--------+----------+
+```
 
----
+Notice Father_Name, Email, and HS_Marks are NULL because we didn't provide values for them.
 
-## 4. DELETE Command
+### (d) SELECT — Specific Columns Only
 
-**Purpose:** Used to remove existing records from a table.
+**Description:** Retrieves only chosen columns instead of the entire table — useful when you don't need every field.
 
 **Syntax:**
 ```sql
-DELETE FROM table_name
-WHERE condition;
+SELECT col1, col2 FROM table_name;
 ```
-
-> **Note:** If the `WHERE` clause is omitted, all records in the table will be deleted, but the table structure remains unchanged.
 
 **Example:**
 ```sql
-DELETE FROM Student
-WHERE StudentID = 2;
+SELECT Name, City, HS_Marks FROM Student;
 ```
 
-**Result:**
+**Output:**
+```
++---------------+------------+----------+
+| Name          | City       | HS_Marks |
++---------------+------------+----------+
+| Aarav Sharma  | Delhi      | 85.50    |
+| Priya Patel   | Ahmedabad  | 78.25    |
+| Rohan Verma   | Lucknow    | 92.00    |
+| Sneha Reddy   | Hyderabad  | 88.75    |
+| Karan Singh   | Jaipur     | 65.40    |
+| Ananya Iyer   | Chennai    | 91.20    |
+| Vikram Nair   | Kochi      | 73.60    |
+| Divya Menon   | Kochi      | 80.00    |
+| Arjun Gupta   | Kanpur     | 68.90    |
+| Kavya Rao     | Bangalore  | 95.30    |
+| Aditya Joshi  | Pune       | 77.85    |
+| Meera Desai   | Surat      | 83.15    |
+| Rahul Mehta   | Mumbai     | NULL     |
++---------------+------------+----------+
+13 rows in set (0.00 sec)
+```
 
-| StudentID | Name  | Age |
-|-----------|-------|-----|
-| 1         | Rahul | 20  |
-| 3         | Amit  | 23  |
+### (e) ALTER TABLE — Add a New Column, Insert Data, and Verify
 
----
+**Description:** Adds a new column (Phone) to the existing table structure, then fills it in for a record.
 
-## 5. MERGE Command
+**Step 1 — Add the column:**
+```sql
+ALTER TABLE Student ADD Phone VARCHAR(15);
+```
 
-**Purpose:** Used to insert, update, or delete records in a target table based on matching records from a source table. It combines the functionality of `INSERT`, `UPDATE`, and `DELETE` into a single statement.
+**Verify structure:**
+```sql
+DESCRIBE Student;
+```
+```
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| stu_id      | int          | NO   | PRI | NULL    |       |
+| Name        | varchar(50)  | NO   |     | NULL    |       |
+| Father_Name | varchar(50)  | YES  |     | NULL    |       |
+| Email       | varchar(100) | YES  |     | NULL    |       |
+| City        | varchar(50)  | YES  |     | NULL    |       |
+| HS_Marks    | decimal(5,2) | YES  |     | NULL    |       |
+| Phone       | varchar(15)  | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+```
+
+**Step 2 — Insert/update data into the new column:**
+```sql
+UPDATE Student SET Phone = '9876543210' WHERE stu_id = 1;
+```
+
+**Verify:**
+```sql
+SELECT stu_id, Name, Phone FROM Student WHERE stu_id = 1;
+```
+```
++--------+--------------+------------+
+| stu_id | Name         | Phone      |
++--------+--------------+------------+
+| 1      | Aarav Sharma | 9876543210 |
++--------+--------------+------------+
+```
+
+### (f) UPDATE — Updating Existing Data
+
+**Description:** Modifies values in existing rows based on a condition.
 
 **Syntax:**
 ```sql
-MERGE INTO target_table AS T
-USING source_table AS S
-ON (T.primary_key = S.primary_key)
-WHEN MATCHED THEN
-    UPDATE SET
-        T.column1 = S.column1,
-        T.column2 = S.column2
-WHEN NOT MATCHED THEN
-    INSERT (column1, column2, ...)
-    VALUES (S.column1, S.column2, ...);
+UPDATE table_name SET column = value WHERE condition;
 ```
 
 **Example:**
-
-**Target Table (Student)**
-
-| StudentID | Name  | Age |
-|-----------|-------|-----|
-| 1         | Rahul | 20  |
-| 2         | Priya | 21  |
-
-**Source Table (NewStudent)**
-
-| StudentID | Name  | Age |
-|-----------|-------|-----|
-| 2         | Priya | 22  |
-| 3         | Amit  | 23  |
-
-**MERGE Statement:**
 ```sql
-MERGE INTO Student AS T
-USING NewStudent AS S
-ON (T.StudentID = S.StudentID)
-WHEN MATCHED THEN
-    UPDATE SET
-        T.Name = S.Name,
-        T.Age = S.Age
-WHEN NOT MATCHED THEN
-    INSERT (StudentID, Name, Age)
-    VALUES (S.StudentID, S.Name, S.Age);
+UPDATE Student SET HS_Marks = 90.00 WHERE stu_id = 5;
 ```
 
-**Result:**
+**Verify:**
+```sql
+SELECT stu_id, Name, HS_Marks FROM Student WHERE stu_id = 5;
+```
 
-| StudentID | Name  | Age |
-|-----------|-------|-----|
-| 1         | Rahul | 20  |
-| 2         | Priya | 22  |
-| 3         | Amit  | 23  |
+**Output:**
+```
++--------+-------------+----------+
+| stu_id | Name        | HS_Marks |
++--------+-------------+----------+
+| 5      | Karan Singh | 90.00    |
++--------+-------------+----------+
+```
 
-**Explanation:**
-- `StudentID` 2 already exists → **Updated** (Age changed from 21 to 22).
-- `StudentID` 3 does not exist → **Inserted** as a new record.
+⚠️ Always use WHERE with UPDATE — omitting it updates every row in the table.
 
----
+### (g) DELETE — Deleting Data
 
-## Summary Table
+**Description:** Removes one or more rows from the table based on a condition.
 
-| Command | Purpose                                      |
-|---------|-----------------------------------------------|
-| INSERT  | Add new records to a table                    |
-| SELECT  | Retrieve data from a table                    |
-| UPDATE  | Modify existing records                       |
-| DELETE  | Remove existing records                       |
-| MERGE   | Insert, update, or delete based on a match     |
+**Syntax:**
+```sql
+DELETE FROM table_name WHERE condition;
+```
+
+**Example:**
+```sql
+DELETE FROM Student WHERE stu_id = 13;
+```
+
+**Verify:**
+```sql
+SELECT * FROM Student WHERE stu_id = 13;
+```
+
+**Output:**
+```
+Empty set (0.00 sec)
+```
+
+The row for stu_id = 13 (Rahul Mehta) is gone.
+
+⚠️ Always use WHERE with DELETE — omitting it deletes all rows in the table.
+
+### (h) MERGING DATA — Upsert in MySQL
+
+**Description:** Standard SQL has a MERGE statement, but MySQL does not support MERGE. Instead, MySQL provides INSERT ... ON DUPLICATE KEY UPDATE — this inserts a new row, but if a row with the same primary/unique key already exists, it updates that row instead. This is called an "upsert" (update + insert).
+
+**Syntax:**
+```sql
+INSERT INTO table_name (col1, col2, ...)
+VALUES (val1, val2, ...)
+ON DUPLICATE KEY UPDATE col2 = val2, ...;
+```
+
+**Example — Case 1: Key doesn't exist yet (acts as INSERT)**
+```sql
+INSERT INTO Student (stu_id, Name, City, HS_Marks)
+VALUES (14, 'Isha Kapoor', 'Indore', 89.00)
+ON DUPLICATE KEY UPDATE City = 'Indore', HS_Marks = 89.00;
+```
+
+**Output:**
+```
+Query OK, 1 row affected (0.01 sec)
+```
+
+**Example — Case 2: Key already exists (acts as UPDATE)**
+```sql
+INSERT INTO Student (stu_id, Name, City, HS_Marks)
+VALUES (14, 'Isha Kapoor', 'Bhopal', 93.50)
+ON DUPLICATE KEY UPDATE City = 'Bhopal', HS_Marks = 93.50;
+```
+
+**Output:**
+```
+Query OK, 2 rows affected (0.01 sec)
+```
+
+2 rows affected is MySQL's way of confirming it took the UPDATE path (1 for delete-equivalent + 1 for insert-equivalent), not a fresh insert.
+
+**Verify:**
+```sql
+SELECT * FROM Student WHERE stu_id = 14;
+```
+
+**Output:**
+```
++--------+-------------+-------------+-------+--------+----------+-------+
+| stu_id | Name        | Father_Name | Email | City   | HS_Marks | Phone |
++--------+-------------+-------------+-------+--------+----------+-------+
+| 14     | Isha Kapoor | NULL        | NULL  | Bhopal | 93.50    | NULL  |
++--------+-------------+-------------+-------+--------+----------+-------+
+```
+
+**Alternative (MySQL-specific) — REPLACE:** REPLACE fully deletes the old row and inserts a brand-new one (so any unlisted columns reset to their defaults, unlike ON DUPLICATE KEY UPDATE which only touches the columns you specify).
+
+```sql
+REPLACE INTO Student (stu_id, Name, City, HS_Marks)
+VALUES (14, 'Isha Kapoor', 'Bhopal', 93.50);
+```
