@@ -473,7 +473,140 @@ LIMIT 5;
 
 ---
 
-## 5.4 LENGTH()
+#
+
+---
+
+# Important Concept: Function Output Does Not Modify the Table
+
+When a built-in function is used inside a `SELECT` statement, MySQL normally **calculates and displays the result without changing the original table data**.
+
+For example:
+
+```sql
+SELECT
+    emp_id,
+    CONCAT(first_name, ' ', last_name) AS full_name
+FROM emp_details
+LIMIT 5;
+```
+
+The query combines `first_name` and `last_name` and displays the result as `full_name`.
+
+### Query Output
+
+| emp_id | full_name |
+|---:|---|
+| 101 | Rahul Sharma |
+| 102 | Priya Das |
+| 103 | Amit Roy |
+| 104 | Sneha Sen |
+| 105 | Rohan Gupta |
+
+However, the original table is **not modified**.
+
+If we execute:
+
+```sql
+SELECT * FROM emp_details;
+```
+
+the original columns remain:
+
+| emp_id | first_name | last_name |
+|---:|---|---|
+| 101 | Rahul | Sharma |
+| 102 | Priya | Das |
+| 103 | Amit | Roy |
+| 104 | Sneha | Sen |
+| 105 | Rohan | Gupta |
+
+The reason is that:
+
+```sql
+CONCAT(first_name, ' ', last_name)
+```
+
+creates a **calculated value only for the current query result**.
+
+The statement:
+
+```sql
+AS full_name
+```
+
+creates an **alias** for the calculated result. It does **not create a permanent column** in the `emp_details` table.
+
+---
+
+## If You Want to Permanently Store `full_name`
+
+If `full_name` should actually become a column in the table, first add the column.
+
+### Step 1: Add `full_name` Column
+
+```sql
+ALTER TABLE emp_details
+ADD full_name VARCHAR(70);
+```
+
+### Step 2: Store the Combined Name
+
+```sql
+UPDATE emp_details
+SET full_name = CONCAT(first_name, ' ', last_name);
+```
+
+### Step 3: Display the Table
+
+```sql
+SELECT
+    emp_id,
+    first_name,
+    last_name,
+    full_name
+FROM emp_details;
+```
+
+### Output
+
+| emp_id | first_name | last_name | full_name |
+|---:|---|---|---|
+| 101 | Rahul | Sharma | Rahul Sharma |
+| 102 | Priya | Das | Priya Das |
+| 103 | Amit | Roy | Amit Roy |
+| 104 | Sneha | Sen | Sneha Sen |
+| 105 | Rohan | Gupta | Rohan Gupta |
+
+### Key Point
+
+```text
+SELECT + Function
+        ↓
+Calculated Result
+        ↓
+Displayed Only
+        ↓
+Original Table Remains Unchanged
+```
+
+Whereas:
+
+```text
+ALTER TABLE
+        ↓
+Add Column
+        ↓
+UPDATE
+        ↓
+Store Calculated Value
+        ↓
+Table Data Is Permanently Changed
+```
+
+> **Remember:** Most function examples in this README use `SELECT`, so they demonstrate **data transformation for display**, not permanent modification of the table.
+
+# 5.4 LENGTH()
 
 ### About
 
