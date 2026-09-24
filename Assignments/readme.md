@@ -1,5 +1,23 @@
 
 ## Pre-requistic 
+
+# University Database Management System
+
+## Database Name
+`university1`
+
+## Description
+This project creates a university database using MySQL.
+It includes department, professor, student, course,
+enrollment, teaching, and prerequisite tables.
+
+## Technologies Used
+- MySQL
+- MySQL Workbench
+
+## SQL Code
+
+```sql
 -- ============================================
 -- 1. CREATE DATABASE
 -- ============================================
@@ -20,11 +38,6 @@ CREATE TABLE department (
     phone VARCHAR(15)
 );
 
-
--- ============================================
--- 3. INSERT DEPARTMENT DATA
--- ============================================
-
 INSERT INTO department (deptId, name, hod, phone)
 VALUES
 (1, 'C.S.E', 'CS006', '2558777'),
@@ -32,7 +45,7 @@ VALUES
 
 
 -- ============================================
--- 4. CREATE PROFESSOR TABLE
+-- 3. CREATE PROFESSOR TABLE
 -- ============================================
 
 CREATE TABLE professor (
@@ -43,11 +56,6 @@ CREATE TABLE professor (
     deptNo INT,
     phone VARCHAR(15)
 );
-
-
--- ============================================
--- 5. INSERT PROFESSOR DATA
--- ============================================
 
 INSERT INTO professor
 (empId, name, sex, startYear, deptNo, phone)
@@ -65,7 +73,7 @@ VALUES
 
 
 -- ============================================
--- 6. CREATE STUDENT TABLE
+-- 4. CREATE STUDENT TABLE
 -- ============================================
 
 CREATE TABLE student (
@@ -77,11 +85,6 @@ CREATE TABLE student (
     deptNo INT,
     advisor VARCHAR(10)
 );
-
-
--- ============================================
--- 7. INSERT STUDENT DATA
--- ============================================
 
 INSERT INTO student
 (rollNo, name, degree, year, sex, deptNo, advisor)
@@ -100,7 +103,7 @@ VALUES
 
 
 -- ============================================
--- 8. CREATE COURSE TABLE
+-- 5. CREATE COURSE TABLE
 -- ============================================
 
 CREATE TABLE course (
@@ -109,11 +112,6 @@ CREATE TABLE course (
     credits INT,
     deptNo INT
 );
-
-
--- ============================================
--- 9. INSERT COURSE DATA
--- ============================================
 
 INSERT INTO course
 (courseId, name, credits, deptNo)
@@ -125,7 +123,7 @@ VALUES
 
 
 -- ============================================
--- 10. CREATE ENROLLMENT TABLE
+-- 6. CREATE ENROLLMENT TABLE
 -- ============================================
 
 CREATE TABLE enrollment (
@@ -135,11 +133,6 @@ CREATE TABLE enrollment (
     year INT,
     grade VARCHAR(5)
 );
-
-
--- ============================================
--- 11. INSERT ENROLLMENT DATA
--- ============================================
 
 INSERT INTO enrollment
 (rollNo, courseId, sem, year, grade)
@@ -157,7 +150,7 @@ VALUES
 
 
 -- ============================================
--- 12. CREATE TEACHING TABLE
+-- 7. CREATE TEACHING TABLE
 -- ============================================
 
 CREATE TABLE teaching (
@@ -167,11 +160,6 @@ CREATE TABLE teaching (
     year INT,
     classroom VARCHAR(10)
 );
-
-
--- ============================================
--- 13. INSERT TEACHING DATA
--- ============================================
 
 INSERT INTO teaching
 (empId, courseId, sem, year, classroom)
@@ -190,18 +178,13 @@ VALUES
 
 
 -- ============================================
--- 14. CREATE PREREQUISITE TABLE
+-- 8. CREATE PREREQUISITE TABLE
 -- ============================================
 
 CREATE TABLE prerequisite (
     preReqCourse VARCHAR(20),
     courseId VARCHAR(10)
 );
-
-
--- ============================================
--- 15. INSERT PREREQUISITE DATA
--- ============================================
 
 INSERT INTO prerequisite
 (preReqCourse, courseId)
@@ -213,12 +196,41 @@ VALUES
 
 
 -- ============================================
--- 16. DISPLAY ALL TABLES
+-- 9. DISPLAY ALL TABLES
 -- ============================================
 
 SHOW TABLES;
 
-- Display data
+
+-- ============================================
+-- 10. DISPLAY TABLE RECORDS
+-- ============================================
+
+SELECT * FROM department;
+SELECT * FROM professor;
+SELECT * FROM student;
+SELECT * FROM course;
+SELECT * FROM enrollment;
+SELECT * FROM teaching;
+SELECT * FROM prerequisite;
+```
+
+## Database Tables
+
+| No. | Table Name |
+|---|---|
+| 1 | department |
+| 2 | professor |
+| 3 | student |
+| 4 | course |
+| 5 | enrollment |
+| 6 | teaching |
+| 7 | prerequisite |
+
+## Author
+Subhadip Manna
+
+## Display data
 
 SHOW TABLES;
 
