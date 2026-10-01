@@ -262,6 +262,21 @@ SELECT * FROM prerequisite;
 15. Show the Roll no, year and degree of the student whose name is Aparajita. 
 
 ## Assignment-2
+16. Display the roll no and name of the students from C.S.E department. 
+17. Display the roll no, name and year of the male students from E.C.E department. 
+18. Display the rollno, name, degree of the students whoose advisor is Mr.Biswanath Pal. 
+19. Display the rollno.name of the M.E female students’ whoose advisor is Mr.Bivas Paramanik. 
+20. Display the name and phone no of HOD of CSE department. 
+21. Display the name of female Professors of CSE department. 
+22. Display the empid, name, start year of HOD of ECE department. 
+23. Display rollno and name of 2nd year M.E male students from ECE department. 
+24. Display the name, degree, courseid, sem of the student who has rollno 1. 
+25. Display the rollno, name and Degree of post graduate students whoose Grade is A++. 
+26. Display the roll no, Name of students in the CSE department along with their advisor name and his empid. 
+27. Display the name, employee ids,phone nos, in CSE department who have joined before 1995. 
+28. Display the empid and Name of professors who teaches post graduate in ECE department. 
+29. Display the name and roll no. of the students who read in second sem post graduate in from ECE and grade greater than B++. 
+30. Display the names of the professors who teach in undergraduate 6th semester CSE courses.  
 
 ## Assignment-3
 ## Assignment-4
