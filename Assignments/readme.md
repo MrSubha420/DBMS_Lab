@@ -279,4 +279,28 @@ SELECT * FROM prerequisite;
 30. Display the names of the professors who teach in undergraduate 6th semester CSE courses.  
 
 ## Assignment-3
+1. Get the empid, name of senior most professors. 
+2. Get the rollno, name of the students whose gender is same as their advisor. 
+3. Get the courseid, coursename, sem taught by advisor of C.S.E dept. 
+4. Get the courseid, coursename, sem taught by H.O.D of each dept. 
+5. Get the post graduate male student and course credit point from C.S.E dept . 
+6. Get the courseid, coursename, department name which has at least one female student. 
+7. Get the courseid, coursename, department name which is not a 6 point course. 
+8. Get the courseid, coursename which has at least one A++ grade student. 
+9. Get the rollno, name of the female student tought by the advisor of CSE dept. 
+10. Get the course id, coursename which have any final year student.
 ## Assignment-4
+1. Find out the max and minimum credit for undergraduate and postgraduate students. 
+2. Find out the name of professors whose empid starts with alphabet ‘C’ and who teaches in 
+undergraduate courses. 
+3. Find out the maximum tenure of any courses. 
+4. Display the degree and total number of students enrolled for that course. 
+5. Display the degree and total number of male/female students enrolled for each course. 
+6. Find out the name of the studets who haven’t enrolle d for postgraduate curses. (Using 
+except clause). 
+7. Find out the name of the professors who teaches both in undergraduate course as well as 
+in the undergraduate course. 
+8. Find out the name of the professors who teaches either in undergraduate course or in the 
+undergraduate course. 
+9. Get the employee id, name of professors who advice at least one female student. 
+10. List the names of the professors who have joined after 2000, in alphabetic order.
